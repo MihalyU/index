@@ -39,7 +39,9 @@ class Course(db.Model):
     price = db.Column(db.Float, nullable=False)
 
 
-
+with app.app_context():
+    db.drop_all()  # 🔥 WARNING: Deletes everything
+    db.create_all()
 def is_admin(user_id):
     user = User.query.get(user_id)
     return user.is_admin if user else False
@@ -172,10 +174,6 @@ api.add_resource(AdminCourse, '/admin/courses')
 if __name__ == '__main__':
     import os
     os.makedirs('instance', exist_ok=True)
-
-    with app.app_context():
-        db.drop_all()  # 🔥 WARNING: Deletes everything
-        db.create_all()
 
     app.run(debug=True)
 
