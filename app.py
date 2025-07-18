@@ -171,9 +171,11 @@ api.add_resource(AdminCourse, '/admin/courses')
 
 if __name__ == '__main__':
     import os
-    os.makedirs('instance', exist_ok=True)  
+    os.makedirs('instance', exist_ok=True)
 
     with app.app_context():
+        db.drop_all()  # 🔥 WARNING: Deletes everything
         db.create_all()
+
     app.run(debug=True)
 
